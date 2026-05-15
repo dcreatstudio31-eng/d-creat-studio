@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - D'CREAT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div class="login-box">
+                <h1>D'CREAT Admin</h1>
+                <p>Connexion au tableau de bord</p>
+                <form id="loginForm" class="login-form">
+                    <input 
+                        type="password" 
+                        id="passwordInput" 
+                        placeholder="Entrez le mot de passe" 
+                        required
+                    >
+                    <button type="submit" class="btn-login">Se Connecter</button>
+                </form>
+                <p class="error-message" id="loginError"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-content">
+                <h1>Tableau de Bord D'CREAT</h1>
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#" data-section="business" class="nav-link active"><i class="fas fa-briefcase"></i> Informations</a></li>
+                <li><a href="#" data-section="services" class="nav-link"><i class="fas fa-tools"></i> Services</a></li>
+                <li><a href="#" data-section="portfolio" class="nav-link"><i class="fas fa-images"></i> Portfolio</a></li>
+                <li><a href="#" data-section="colors" class="nav-link"><i class="fas fa-palette"></i> Couleurs</a></li>
+                <li><a href="#" data-section="about" class="nav-link"><i class="fas fa-info-circle"></i> À Propos</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-content">
+            <!-- Business Info Section -->
+            <section id="business" class="section active">
+                <h2>Informations Commerciales</h2>
+                <form class="form-group">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Nom de l'Entreprise</label>
+                            <input type="text" id="businessName" placeholder="D'CREAT">
+                        </div>
+                        <div class="form-field">
+                            <label>Tagline</label>
+                            <input type="text" id="businessTagline" placeholder="Architecte d'Intérieur">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Email</label>
+                            <input type="email" id="businessEmail" placeholder="contact@dcreat.fr">
+                        </div>
+                        <div class="form-field">
+                            <label>Téléphone</label>
+                            <input type="tel" id="businessPhone" placeholder="0758157116">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Localisation</label>
+                            <input type="text" id="businessLocation" placeholder="Toulouse, France">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Description</label>
+                        <textarea id="businessDescription" rows="4" placeholder="Description de votre entreprise..."></textarea>
+                    </div>
+
+                    <button type="button" class="btn-save" onclick="saveBusinessInfo()">
+                        <i class="fas fa-save"></i> Enregistrer les modifications
+                    </button>
+                </form>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="section">
+                <h2>Gérer les Services</h2>
+                <div id="servicesList" class="services-list"></div>
+                <button type="button" class="btn-add" onclick="addService()">
+                    <i class="fas fa-plus"></i> Ajouter un Service
+                </button>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="section">
+                <h2>Gérer le Portfolio</h2>
+                <div id="portfolioList" class="portfolio-list"></div>
+                <button type="button" class="btn-add" onclick="addPortfolioProject()">
+                    <i class="fas fa-plus"></i> Ajouter un Projet
+                </button>
+            </section>
+
+            <!-- Colors Section -->
+            <section id="colors" class="section">
+                <h2>Personnaliser les Couleurs</h2>
+                <div class="colors-grid">
+                    <div class="color-field">
+                        <label>Couleur Primaire</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="colorPrimary" class="color-picker">
+                            <span class="color-value" id="colorPrimaryValue">#8B6F47</span>
+                        </div>
+                    </div>
+
+                    <div class="color-field">
+                        <label>Couleur Secondaire</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="colorSecondary" class="color-picker">
+                            <span class="color-value" id="colorSecondaryValue">#2C3E50</span>
+                        </div>
+                    </div>
+
+                    <div class="color-field">
+                        <label>Couleur d'Accent</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="colorAccent" class="color-picker">
+                            <span class="color-value" id="colorAccentValue">#E8D5C4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-save" onclick="saveColors()">
+                        <i class="fas fa-save"></i> Appliquer les Couleurs
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="resetColors()">
+                        <i class="fas fa-redo"></i> Réinitialiser
+                    </button>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section">
+                <h2>À Propos</h2>
+                <form class="form-group">
+                    <div class="form-field">
+                        <label>Titre</label>
+                        <input type="text" id="aboutTitle" placeholder="À Propos de D'CREAT">
+                    </div>
+
+                    <div class="form-field">
+                        <label>Description</label>
+                        <textarea id="aboutDescription" rows="4" placeholder="Description..."></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label>Avantages (un par ligne)</label>
+                        <textarea id="aboutBenefits" rows="6" placeholder="Gestion complète de projet de A à Z
+Respect du budget et des délais
+Visualisations 3D avant le début des travaux
+Coordination professionnelle des artisans
+Suivi qualité rigoureux"></textarea>
+                    </div>
+
+                    <button type="button" class="btn-save" onclick="saveAboutInfo()">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i> Modifications enregistrées avec succès!
+    </div>
+
+    <script src="admin-config.js"></script>
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
